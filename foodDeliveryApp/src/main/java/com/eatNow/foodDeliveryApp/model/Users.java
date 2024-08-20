@@ -1,50 +1,48 @@
 package com.eatNow.foodDeliveryApp.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+
+import com.eatNow.foodDeliveryApp.dto.RestaurantDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Users {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String username;
 
+    private String email;
+
     private String password;
 
-    public int getID(){
-        return id;
-    }
+    private USER_ROLE role;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @JsonIgnore
+    @OneToMany
+    private List<Order> orders = new ArrayList<>();
 
-    public String getUsername(){
-        return username;
-    }
+    @ElementCollection
+    private List<RestaurantDto> favourites = new ArrayList<>();
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @OneToMany
+    private List<Address> addresses = new ArrayList<>();
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+
+
 
 }
