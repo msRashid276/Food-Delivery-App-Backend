@@ -31,13 +31,13 @@ public class Users {
     private USER_ROLE role;
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection  //persist a collection of values that are not entities
     private List<RestaurantDto> favourites = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)  //when ever delete this user all the address related to this user will be removed
     private List<Address> addresses = new ArrayList<>();
 
 
