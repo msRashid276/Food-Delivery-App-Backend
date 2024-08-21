@@ -1,26 +1,33 @@
 package com.eatNow.foodDeliveryApp.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.util.List;
+
 @Data
-@NoArgsConstructor
+@Entity
 @AllArgsConstructor
-public class IngredientsItem {
+@NoArgsConstructor
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    @JsonIgnore
+    @ManyToOne
+    private Cart cart;
 
     @ManyToOne
-    private IngredientsCategory category;
+    private Food food;
 
-    @ManyToOne
-    private Restaurant restaurant;
+    private int quantity;
 
-    private boolean inStoke=true;
+    private List<String> ingredients;
+
+    private Long totalPrice;
 }

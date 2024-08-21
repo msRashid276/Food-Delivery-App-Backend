@@ -1,26 +1,31 @@
 package com.eatNow.foodDeliveryApp.model;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngredientsItem {
+public class Cart {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    @OneToOne
+    private Users customer;
 
-    @ManyToOne
-    private IngredientsCategory category;
+    private Long total;
 
-    @ManyToOne
-    private Restaurant restaurant;
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<CartItem> item = new ArrayList<>();
 
-    private boolean inStoke=true;
+
 }

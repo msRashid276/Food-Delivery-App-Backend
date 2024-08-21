@@ -1,7 +1,9 @@
 package com.eatNow.foodDeliveryApp.model;
 
 
+
 import lombok.Data;
+
 
 @Data
 public class ContactInformation {
