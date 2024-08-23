@@ -34,10 +34,10 @@ public class UserService {
 
 
     public String verify(Users user) {
-      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
 
       if(authentication.isAuthenticated()){
-          return jwtService.generateToken(user.getUsername());
+          return jwtService.generateToken(user.getEmail());
       }else{
           return "failed";
       }
