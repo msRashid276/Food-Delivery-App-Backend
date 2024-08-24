@@ -1,14 +1,20 @@
 package com.eatNow.foodDeliveryApp.service;
 
 
+import com.eatNow.foodDeliveryApp.model.USER_ROLE;
+import com.eatNow.foodDeliveryApp.model.UserPrinciple;
 import com.eatNow.foodDeliveryApp.model.Users;
 import com.eatNow.foodDeliveryApp.repository.UserRepo;
+import com.eatNow.foodDeliveryApp.request.AuthenticationRequest;
+import com.eatNow.foodDeliveryApp.request.RegisterRequest;
+import com.eatNow.foodDeliveryApp.response.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,23 +29,51 @@ public class UserService {
     @Autowired
     private JWTService jwtService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public Users register(Users user){
-        user.setPassword(encoder.encode(user.getPassword()));
-        return repo.save(user);
+
+
+    public RegisterRequest register(RegisterRequest request){
+
+        try {
+            var user = Users.builder()
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(USER_ROLE.ROLE_CUSTOMER)
+                    .build();
+
+            repo.save(user);
+
+            return request;
+        }catch (Exception e){
+            throw new RuntimeException("Registration failed: " + e.getMessage());
+        }
+
+
     }
 
 
-    public String verify(Users user) {
-      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        try{
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
 
-      if(authentication.isAuthenticated()){
-          return jwtService.generateToken(user.getEmail());
-      }else{
-          return "failed";
+            if(authentication.isAuthenticated()) {
+                var userPrinciple = (UserPrinciple) authentication.getPrincipal();
+                var jwtToken = jwtService.generateToken(request.getEmail());
+                return AuthenticationResponse.builder()
+                        .token(jwtToken)
+                        .firstName(userPrinciple.getUser().getFirstName())
+                        .build();
+            }else{
+                throw new RuntimeException("Authentication failed");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("invalid credentials");
       }
     }
 

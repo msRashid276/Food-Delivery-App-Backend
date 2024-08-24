@@ -18,13 +18,18 @@ public class UserPrinciple implements UserDetails {
         this.user = user;
     }
 
+    public Users getUser(){
+        return this.user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
     public String getPassword() {
+
         return user.getPassword();
     }
 
@@ -35,21 +40,22 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+    public boolean isEnabled()
+    {
+        return true;
     }
 }
