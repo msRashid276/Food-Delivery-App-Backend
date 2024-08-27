@@ -6,13 +6,16 @@ import com.eatNow.foodDeliveryApp.model.Restaurant;
 import com.eatNow.foodDeliveryApp.model.Users;
 import com.eatNow.foodDeliveryApp.repository.AddressRepo;
 import com.eatNow.foodDeliveryApp.repository.RestaurantRepo;
+import com.eatNow.foodDeliveryApp.repository.UserRepo;
 import com.eatNow.foodDeliveryApp.request.CreateRestaurantRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class RestaurantServiceImp implements RestaurantService {
 
     @Autowired
@@ -23,10 +26,12 @@ public class RestaurantServiceImp implements RestaurantService {
         this.addressRepo = addressRepo;
     }
 
+
     @Autowired
-    private UserService userService;
+    private RestaurantDto restaurantDto;
 
-
+    @Autowired
+    private UserRepo userRepo;
 
 
 
@@ -106,16 +111,40 @@ public class RestaurantServiceImp implements RestaurantService {
 
     @Override
     public Restaurant getRestaurantByUserId(Long userId) throws Exception {
-        return null;
+
+        Restaurant restaurant = restaurantRepo.findByOwnerId(userId);
+        if(restaurant==null){
+            throw new Exception("restaurant not found with owner id " + userId);
+        }
+        return restaurant;
     }
 
     @Override
     public RestaurantDto addToFavourites(Long restaurantId, Users user) throws Exception {
-        return null;
+
+        Restaurant restaurant = findRestaurantById(restaurantId);
+
+        restaurantDto.setDescription(restaurant.getDescription());
+        restaurantDto.setImages(restaurant.getImages());
+        restaurantDto.setTitle(restaurant.getName());
+        restaurantDto.setId(restaurantId);
+
+        if(user.getFavourites().contains(restaurantDto)){
+            user.getFavourites().remove(restaurantDto);
+        }else{
+            user.getFavourites().add(restaurantDto);
+        }
+
+        userRepo.save(user);
+
+        return restaurantDto;
     }
 
     @Override
     public Restaurant updateRestaurantStatus(Long id) throws Exception {
-        return null;
+        Restaurant restaurant = findRestaurantById(id);
+        restaurant.setOpen(!restaurant.isOpen());
+
+        return restaurantRepo.save(restaurant);
     }
 }
