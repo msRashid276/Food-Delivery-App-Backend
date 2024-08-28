@@ -4,7 +4,7 @@ import com.eatNow.foodDeliveryApp.dto.RestaurantDto;
 import com.eatNow.foodDeliveryApp.model.Restaurant;
 import com.eatNow.foodDeliveryApp.model.Users;
 import com.eatNow.foodDeliveryApp.request.CreateRestaurantRequest;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 

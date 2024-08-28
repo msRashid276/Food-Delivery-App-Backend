@@ -5,7 +5,6 @@ import com.eatNow.foodDeliveryApp.model.Users;
 import com.eatNow.foodDeliveryApp.request.AuthenticationRequest;
 import com.eatNow.foodDeliveryApp.request.RegisterRequest;
 import com.eatNow.foodDeliveryApp.response.AuthenticationResponse;
-import org.springframework.stereotype.Service;
 
 
 public interface UserService {

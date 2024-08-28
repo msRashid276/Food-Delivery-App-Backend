@@ -15,8 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+
 @Service
-public class UserServiceImp {
+public class UserServiceImp implements UserService{
+
     @Autowired
     private UserRepo repo;
 
@@ -34,19 +36,19 @@ public class UserServiceImp {
 
 
     public RegisterRequest register(RegisterRequest request){
-
+        System.out.println(request.getRole());
         try {
             var user = Users.builder()
                     .firstName(request.getFirstName())
                     .lastName(request.getLastName())
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
-                    .role(USER_ROLE.ROLE_CUSTOMER)
+                    .role(request.getRole())
                     .build();
-
+            System.out.println(request.getRole());
             repo.save(user);
-
             return request;
+
         }catch (Exception e){
             throw new RuntimeException("Registration failed: " + e.getMessage());
         }

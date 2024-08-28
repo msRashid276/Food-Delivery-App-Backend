@@ -21,10 +21,11 @@ public class RestaurantServiceImp implements RestaurantService {
     @Autowired
     private RestaurantRepo restaurantRepo;
 
+    @Autowired
     private AddressRepo addressRepo;
-    public RestaurantServiceImp(AddressRepo addressRepo) {
-        this.addressRepo = addressRepo;
-    }
+//    public RestaurantServiceImp(AddressRepo addressRepo) {
+//        this.addressRepo = addressRepo;
+//    }
 
 
     @Autowired
@@ -94,10 +95,14 @@ public class RestaurantServiceImp implements RestaurantService {
        return restaurantRepo.findAll();
     }
 
+
+
     @Override
     public List<Restaurant> searchRestaurant(String keyword) {
         return restaurantRepo.findBySearchQuery(keyword);
     }
+
+
 
     @Override
     public Restaurant findRestaurantById(Long id) throws Exception {

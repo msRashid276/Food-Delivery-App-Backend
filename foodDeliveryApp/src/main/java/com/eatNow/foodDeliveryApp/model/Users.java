@@ -28,9 +28,11 @@ public class Users {
 
     private String lastName;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
+
 
     private USER_ROLE role;
 
