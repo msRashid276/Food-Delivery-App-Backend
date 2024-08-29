@@ -33,8 +33,8 @@ public class Users {
 
     private String password;
 
-
-    private USER_ROLE role;
+    @Enumerated(value = EnumType.STRING)
+    private USER_ROLE role=USER_ROLE.USER;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")

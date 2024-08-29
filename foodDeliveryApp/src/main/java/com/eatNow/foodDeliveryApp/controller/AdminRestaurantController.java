@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin/restaurants")
+@RequestMapping("/api/admin")
 public class AdminRestaurantController {
 
     @Autowired
@@ -23,8 +23,15 @@ public class AdminRestaurantController {
     private UserService userService;
 
 
-    @PostMapping()
+    @PostMapping("/test")
+    public String greet(){
+        return "hey iam a coder";
+    }
+
+    @PostMapping("/restaurants")
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody CreateRestaurantRequest request,@RequestHeader("Authorization") String jwt){
+        System.out.println(request);
+        System.out.println(jwt);
         Users user = userService.findUserByJwtToken(jwt);
 
         Restaurant restaurant = restaurantService.createRestaurant(request,user);

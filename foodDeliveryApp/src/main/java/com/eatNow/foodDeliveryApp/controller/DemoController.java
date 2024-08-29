@@ -11,7 +11,7 @@ public class DemoController {
 
     @GetMapping("/view")
     public String greet(){
-        return "hey beauty";
+        return "hey bro iam coder";
     }
 
 }

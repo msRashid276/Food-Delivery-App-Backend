@@ -35,8 +35,13 @@ public class UserServiceImp implements UserService{
 
 
 
-    public RegisterRequest register(RegisterRequest request){
-        System.out.println(request.getRole());
+    public RegisterRequest register(RegisterRequest request) {
+        Users existingUser = repo.findByEmail(request.getEmail());
+
+        if (existingUser != null) {
+            throw new IllegalStateException("Email is already used with another account");
+        }
+
         try {
             var user = Users.builder()
                     .firstName(request.getFirstName())
@@ -45,7 +50,9 @@ public class UserServiceImp implements UserService{
                     .password(passwordEncoder.encode(request.getPassword()))
                     .role(request.getRole())
                     .build();
+
             System.out.println(request.getRole());
+
             repo.save(user);
             return request;
 
@@ -83,6 +90,7 @@ public class UserServiceImp implements UserService{
 
             if(username!=null){
                 return repo.findByEmail(username);
+
             }
             else {
                 throw new RuntimeException("user not found");
