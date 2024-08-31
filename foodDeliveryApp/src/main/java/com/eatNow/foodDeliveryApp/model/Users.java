@@ -28,13 +28,13 @@ public class Users {
 
     private String lastName;
 
-    @Column(unique = true)
+
     private String email;
 
     private String password;
 
-    @Enumerated(value = EnumType.STRING)
-    private USER_ROLE role=USER_ROLE.USER;
+
+    private USER_ROLE role;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")

@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration  //Marks this class as a configuration class, allowing Spring to process it and generate Spring Beans.
-@EnableWebSecurity   //Disables the default Spring Security configuration, allowing you to customize security settings as needed.
+@EnableWebSecurity   //Disables the default Spring Security configuration, allowing you to customize security settings as needed.  define the security rules and policies that govern access to the application's resources
 public class SecurityConfig {
 
     @Autowired
@@ -44,12 +44,13 @@ public class SecurityConfig {
        return httpSecurity
                 .csrf(customizer->customizer.disable())
                 .authorizeHttpRequests(request->request
-                        .requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER","ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/restaurantOwner/**").hasAnyRole("RESTAURANT_OWNER","ADMIN")
                         .requestMatchers("/api/user/**").hasRole("USER")
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
+//                .formLogin(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                .cors(cors->cors.configurationSource(corsConfigurationSource()))

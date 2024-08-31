@@ -1,11 +1,11 @@
 package com.eatNow.foodDeliveryApp.service;
 
-import com.eatNow.foodDeliveryApp.model.UserPrinciple;
-import com.eatNow.foodDeliveryApp.model.Users;
+import com.eatNow.foodDeliveryApp.model.USER_ROLE;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -15,36 +15,48 @@ import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JWTService {
 
 
-    private String SECRET_KEY = "";
+    private static final String SECRET_KEY = "58687b213aa34b354623c67a68084f99a1c46f0e57fb0b547051d6d3010fa611cc77c4dea1477a1c5b2136bc66650d0c";
 
-    public JWTService(){
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+//    public JWTService(){
+//        try {
+//            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+//
+//            SecretKey sk = keyGenerator.generateKey();
+//
+//            SECRET_KEY = Base64.getEncoder().encodeToString(sk.getEncoded());
+//
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 
-            SecretKey sk = keyGenerator.generateKey();
-
-            SECRET_KEY = Base64.getEncoder().encodeToString(sk.getEncoded());
-
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public String generateToken(String username) {
+    public String generateToken(Authentication authentication) {
 
 
-        Map<String,Object> claims = new HashMap<>();
+        // Initialize a map to hold claims
+        Map<String, Object> claims = new HashMap<>();
 
+
+        // Extract the roles from the Authentication object
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        claims.put("roles", authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
+
+        System.out.println(claims);
+
+        // Build the JWT token with the claims, subject, and other details
         return Jwts.builder()
                 .claims()
                 .add(claims)
-                .subject(username)
+                .subject(authentication.getName())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .and()
@@ -75,8 +87,6 @@ public class JWTService {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-
-
 
     }
 

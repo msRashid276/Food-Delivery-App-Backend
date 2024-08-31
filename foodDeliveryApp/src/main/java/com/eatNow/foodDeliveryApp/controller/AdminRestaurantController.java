@@ -1,6 +1,7 @@
 package com.eatNow.foodDeliveryApp.controller;
 
 
+import com.eatNow.foodDeliveryApp.filter.JwtFilter;
 import com.eatNow.foodDeliveryApp.model.Restaurant;
 import com.eatNow.foodDeliveryApp.model.Users;
 import com.eatNow.foodDeliveryApp.request.CreateRestaurantRequest;
@@ -23,15 +24,12 @@ public class AdminRestaurantController {
     private UserService userService;
 
 
-    @PostMapping("/test")
-    public String greet(){
-        return "hey iam a coder";
-    }
 
     @PostMapping("/restaurants")
-    public ResponseEntity<Restaurant> createRestaurant(@RequestBody CreateRestaurantRequest request,@RequestHeader("Authorization") String jwt){
+    public ResponseEntity<Restaurant> createRestaurant(@RequestBody CreateRestaurantRequest request,@RequestHeader("Authorization")String jwt) throws Exception {
         System.out.println(request);
         System.out.println(jwt);
+
         Users user = userService.findUserByJwtToken(jwt);
 
         Restaurant restaurant = restaurantService.createRestaurant(request,user);
