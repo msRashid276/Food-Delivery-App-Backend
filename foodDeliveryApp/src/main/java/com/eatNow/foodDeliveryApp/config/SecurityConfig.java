@@ -44,9 +44,9 @@ public class SecurityConfig {
        return httpSecurity
                 .csrf(customizer->customizer.disable())
                 .authorizeHttpRequests(request->request
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/restaurantOwner/**").hasAnyRole("RESTAURANT_OWNER","ADMIN")
-                        .requestMatchers("/api/user/**").hasRole("USER")
+                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/restaurantOwner/**").hasAnyAuthority("RESTAURANT_OWNER","ADMIN")
+                        .requestMatchers("/api/user/**").hasAnyAuthority("USER","ADMIN")
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
 //                .formLogin(Customizer.withDefaults())

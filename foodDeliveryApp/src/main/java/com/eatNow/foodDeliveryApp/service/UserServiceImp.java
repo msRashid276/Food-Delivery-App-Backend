@@ -105,9 +105,9 @@ public class UserServiceImp implements UserService{
 
 
 
-    public Users findUserByJwtToken(String jwtToken){
+    public Users findUserByAuthorizationHeader(String authHeader){
         try {
-            String username = jwtService.extractUserName(jwtToken);
+            String username = jwtService.extractUserName(authHeader.substring(7));
             System.out.println(username);
 
             return null;

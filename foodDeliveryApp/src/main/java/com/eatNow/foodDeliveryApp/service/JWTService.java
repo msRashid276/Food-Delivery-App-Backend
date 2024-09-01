@@ -2,6 +2,7 @@ package com.eatNow.foodDeliveryApp.service;
 
 import com.eatNow.foodDeliveryApp.model.USER_ROLE;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 public class JWTService {
 
 
-    private static final String SECRET_KEY = "58687b213aa34b354623c67a68084f99a1c46f0e57fb0b547051d6d3010fa611cc77c4dea1477a1c5b2136bc66650d0c";
+    private static final String SECRET_KEY = "A5A4F98AAF1202327DC068B7BC90617B4ACA836F1BB401237D0D1600B665FC3F";
 
 //    public JWTService(){
 //        try {
@@ -73,7 +74,12 @@ public class JWTService {
 
 
     public String extractUserName(String token) {
-        return extractClaim(token, Claims::getSubject);
+        try {
+            return extractClaim(token, Claims::getSubject);
+        }catch (JwtException e){
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 
     private <T> T extractClaim(String token, Function<Claims,T> claimResolver) {

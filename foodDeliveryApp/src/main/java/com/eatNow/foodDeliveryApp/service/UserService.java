@@ -14,6 +14,6 @@ public interface UserService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request);
 
-    public Users findUserByJwtToken(String jwtToken) throws Exception;
+    public Users findUserByAuthorizationHeader(String authHeader) throws Exception;
 
 }

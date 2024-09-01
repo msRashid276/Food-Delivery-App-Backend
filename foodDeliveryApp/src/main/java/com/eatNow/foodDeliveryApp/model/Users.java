@@ -33,7 +33,7 @@ public class Users {
 
     private String password;
 
-
+    @Enumerated(EnumType.STRING)
     private USER_ROLE role;
 
     @JsonIgnore
