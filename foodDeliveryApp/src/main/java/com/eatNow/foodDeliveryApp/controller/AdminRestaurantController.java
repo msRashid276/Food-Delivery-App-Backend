@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/res_owner/restaurants")
 public class AdminRestaurantController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class AdminRestaurantController {
 
 
 
-    @PostMapping("/restaurants")
+    @PostMapping()
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody CreateRestaurantRequest request,@RequestHeader("Authorization")String authHeader) throws Exception {
         System.out.println(request);
         System.out.println(authHeader);
@@ -56,10 +56,11 @@ public class AdminRestaurantController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Restaurant> updateRestaurantStatus(@PathVariable Long restaurantId,@RequestHeader("Authorization") String authHeader) throws Exception {
+    public ResponseEntity<Restaurant> updateRestaurantStatus(@PathVariable Long id,@RequestHeader("Authorization") String authHeader) throws Exception {
+
         Users user = userService.findUserByAuthorizationHeader(authHeader);
 
-        Restaurant restaurant = restaurantService.updateRestaurantStatus(restaurantId);
+        Restaurant restaurant = restaurantService.updateRestaurantStatus(id);
 
 
         return new ResponseEntity<>(restaurant,HttpStatus.OK);

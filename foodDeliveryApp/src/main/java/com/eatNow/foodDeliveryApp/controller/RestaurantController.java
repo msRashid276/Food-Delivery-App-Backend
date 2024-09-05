@@ -29,9 +29,9 @@ public class RestaurantController {
     private UserService userService;
 
     @GetMapping("/search")
-    public ResponseEntity<List<Restaurant>> searchRestaurant(@RequestParam String keyword, @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<List<Restaurant>> searchRestaurant(@RequestParam String keyword, @RequestHeader("Authorization") String authHeader) throws Exception {
 
-        Users user = userService.findUserByJwtToken(jwt);
+        Users user = userService.findUserByAuthorizationHeader(authHeader);
 
         List<Restaurant> restaurant = restaurantService.searchRestaurant(keyword);
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
@@ -39,9 +39,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Restaurant>> getAllRestaurants(@RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<List<Restaurant>> getAllRestaurants(@RequestHeader("Authorization") String authHeader) throws Exception {
 
-        Users user = userService.findUserByJwtToken(jwt);
+        Users user = userService.findUserByAuthorizationHeader(authHeader);
 
         List<Restaurant> restaurant = restaurantService.getAllRestaurant();
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
@@ -49,18 +49,18 @@ public class RestaurantController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Restaurant> findRestaurantById(@RequestHeader("Authorization") String jwt,@PathVariable Long id) throws Exception {
+    public ResponseEntity<Restaurant> findRestaurantById(@RequestHeader("Authorization") String authHeader,@PathVariable Long id) throws Exception {
 
-        Users user = userService.findUserByJwtToken(jwt);
+        Users user = userService.findUserByAuthorizationHeader(authHeader);
 
         Restaurant restaurant = restaurantService.findRestaurantById(id);
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/add-favourites")
-    public ResponseEntity<RestaurantDto> addToFavourites(@RequestHeader("Authorization") String jwt,@PathVariable Long id) throws Exception {
+    public ResponseEntity<RestaurantDto> addToFavourites(@RequestHeader("Authorization") String authHeader,@PathVariable Long id) throws Exception {
 
-        Users user = userService.findUserByJwtToken(jwt);
+        Users user = userService.findUserByAuthorizationHeader(authHeader);
 
         RestaurantDto restaurant = restaurantService.addToFavourites(id,user);
         return new ResponseEntity<>(restaurant, HttpStatus.OK);

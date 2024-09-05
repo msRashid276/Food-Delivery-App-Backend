@@ -110,16 +110,17 @@ public class UserServiceImp implements UserService{
             String username = jwtService.extractUserName(authHeader.substring(7));
             System.out.println(username);
 
-            return null;
-//            if(username!=null){
-//                return repo.findByEmail(username);
-//            }
-//            else {
-//                throw new RuntimeException("user not found");
-//            }
+            if(username!=null){
+                return repo.findByEmail(username);
+            }
+            else {
+                throw new RuntimeException("user not found");
+            }
         }catch (Exception e){
             throw new RuntimeException("Failed to find user by JWT token: " + e.getMessage());
         }
     }
+
+
 
 }

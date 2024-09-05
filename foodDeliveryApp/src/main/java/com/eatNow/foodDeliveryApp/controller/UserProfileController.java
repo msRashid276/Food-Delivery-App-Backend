@@ -1,5 +1,6 @@
 package com.eatNow.foodDeliveryApp.controller;
 
+
 import com.eatNow.foodDeliveryApp.model.Users;
 import com.eatNow.foodDeliveryApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("")
-public class DemoController {
+@RequestMapping("/api/res_owner")
+public class UserProfileController {
 
+    @Autowired
+    private UserService userService;
 
+    @GetMapping("/profile")
+    public ResponseEntity<Users> getUserProfile(@RequestHeader("Authorization") String authHeader) throws Exception {
 
-
-
-
+        System.out.println(authHeader);
+        Users user = userService.findUserByAuthorizationHeader(authHeader);
+        System.out.println(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
 }

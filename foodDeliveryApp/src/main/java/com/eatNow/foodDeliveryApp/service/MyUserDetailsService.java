@@ -30,6 +30,12 @@ public class MyUserDetailsService implements UserDetailsService {
         if(user==null){
             throw new UsernameNotFoundException("user not found");
         }
+
+        USER_ROLE role = user.getRole();
+        if(role==null){
+            user.setRole(USER_ROLE.CUSTOMER);
+        }
+
         return new UserPrinciple(user);
 
 

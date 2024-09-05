@@ -2,7 +2,7 @@ package com.eatNow.foodDeliveryApp.model;
 
 public enum USER_ROLE {
 
-    USER,
+    CUSTOMER,
 
     RESTAURANT_OWNER,
 

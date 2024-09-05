@@ -11,9 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.KeyGenerator;
+
 import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -24,19 +24,6 @@ public class JWTService {
 
     private static final String SECRET_KEY = "A5A4F98AAF1202327DC068B7BC90617B4ACA836F1BB401237D0D1600B665FC3F";
 
-//    public JWTService(){
-//        try {
-//            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-//
-//            SecretKey sk = keyGenerator.generateKey();
-//
-//            SECRET_KEY = Base64.getEncoder().encodeToString(sk.getEncoded());
-//
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
 
     public String generateToken(Authentication authentication) {
 
