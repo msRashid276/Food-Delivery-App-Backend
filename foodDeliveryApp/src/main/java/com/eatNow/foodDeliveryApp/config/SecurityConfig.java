@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request->request
                         .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/res_owner/**").hasAnyAuthority("RESTAURANT_OWNER","ADMIN")
-                        .requestMatchers("/api/user/**").hasAnyAuthority("CUSTOMER","ADMIN")
+                        .requestMatchers("/api/user/**").hasAnyAuthority("CUSTOMER","RESTAURANT_OWNER","ADMIN")
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
 //                .formLogin(Customizer.withDefaults())

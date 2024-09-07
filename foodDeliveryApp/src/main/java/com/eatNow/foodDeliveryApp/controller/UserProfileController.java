@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/res_owner")
+@RequestMapping("/api/user")
 public class UserProfileController {
 
     @Autowired
