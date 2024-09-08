@@ -51,7 +51,7 @@ public class AdminRestaurantController {
         restaurantService.deleteRestaurant(restaurantId);
 
         MessageResponse response = new MessageResponse();
-        response.setMessage("restaurant deleted succesfully");
+        response.setMessage("restaurant deleted successfully");
         return new ResponseEntity<>(response,HttpStatus.NO_CONTENT);
     }
 
