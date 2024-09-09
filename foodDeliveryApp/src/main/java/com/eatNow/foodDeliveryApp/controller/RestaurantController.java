@@ -38,7 +38,7 @@ public class RestaurantController {
 
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<Restaurant>> getAllRestaurants(@RequestHeader("Authorization") String authHeader) throws Exception {
 
         Users user = userService.findUserByAuthorizationHeader(authHeader);

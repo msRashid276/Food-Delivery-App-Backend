@@ -36,7 +36,7 @@ public class AdminRestaurantController {
         return  new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{restaurantId}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable Long restaurantId,@RequestHeader("Authorization") String authHeader, @RequestBody CreateRestaurantRequest updateRequest) throws Exception {
         Users user = userService.findUserByAuthorizationHeader(authHeader);
 
@@ -44,7 +44,7 @@ public class AdminRestaurantController {
         return  new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{restaurantId}")
     public ResponseEntity<MessageResponse> deleteRestaurant(@PathVariable Long restaurantId,@RequestHeader("Authorization") String authHeader) throws Exception {
         Users user = userService.findUserByAuthorizationHeader(authHeader);
 

@@ -62,12 +62,17 @@ public class RestaurantServiceImp implements RestaurantService {
 
         Restaurant restaurant = findRestaurantById(restaurantId);
 
+
+
+        if (updatedRestaurant.getAddress() != null) {
+            Address updatedAddress = addressRepo.save(updatedRestaurant.getAddress());
+            restaurant.setAddress(updatedAddress);  // Save address and then set it
+        }
+
         if(restaurant.getCuisineType()!=null){
             restaurant.setCuisineType(updatedRestaurant.getCuisineType());
         }
-        if(restaurant.getAddress()!=null){
-            restaurant.setAddress(updatedRestaurant.getAddress());
-        }
+
         if(restaurant.getContactInformation()!=null){
             restaurant.setContactInformation(updatedRestaurant.getContactInformation());
         }
