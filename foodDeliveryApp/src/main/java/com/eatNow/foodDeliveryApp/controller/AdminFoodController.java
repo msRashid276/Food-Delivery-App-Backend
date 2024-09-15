@@ -56,7 +56,7 @@ public class AdminFoodController {
         Users user = userService.findUserByAuthorizationHeader(authHeader);
         Food food = foodService.updateAvailableStatus(id);
 
-        return new ResponseEntity<>(food,HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(food,HttpStatus.OK);
 
     }
 
