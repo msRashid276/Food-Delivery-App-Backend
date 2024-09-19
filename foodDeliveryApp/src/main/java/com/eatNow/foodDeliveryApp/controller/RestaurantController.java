@@ -19,8 +19,6 @@ import java.util.List;
 public class RestaurantController {
 
 
-    @Autowired
-    private JWTService jwtService;
 
     @Autowired
     private RestaurantService restaurantService;

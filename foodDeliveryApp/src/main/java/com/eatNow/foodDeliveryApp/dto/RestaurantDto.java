@@ -22,5 +22,4 @@ public class RestaurantDto {
 
     private Long id;
 
-
 }

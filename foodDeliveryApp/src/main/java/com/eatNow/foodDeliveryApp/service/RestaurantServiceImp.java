@@ -23,10 +23,6 @@ public class RestaurantServiceImp implements RestaurantService {
 
     @Autowired
     private AddressRepo addressRepo;
-//    public RestaurantServiceImp(AddressRepo addressRepo) {
-//        this.addressRepo = addressRepo;
-//    }
-
 
     @Autowired
     private RestaurantDto restaurantDto;
@@ -139,11 +135,6 @@ public class RestaurantServiceImp implements RestaurantService {
         restaurantDto.setTitle(restaurant.getName());
         restaurantDto.setId(restaurantId);
 
-//        if(user.getFavourites().contains(restaurantDto)){
-//            user.getFavourites().remove(restaurantDto);
-//        }else{
-//            user.getFavourites().add(restaurantDto);
-//        }
 
         boolean isFavourited = false;
         List<RestaurantDto> favourites = user.getFavourites();
