@@ -22,13 +22,7 @@ public class CartServiceImp implements CartService{
     private CartRepo cartRepo;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private CartItemRepo cartItemRepo;
-
-    @Autowired
-    private FoodRepository foodRepository;
 
     @Autowired
     private FoodService foodService;
@@ -114,13 +108,17 @@ public class CartServiceImp implements CartService{
 
     @Override
     public Cart findCartByUserId(Long userId) throws Exception {
-        return cartRepo.findByCustomerId(userId);
+        Cart cart = cartRepo.findByCustomerId(userId);
+        cart.setTotal(calculateCartTotals(cart));
+
+        return cart;
     }
 
     @Override
     public Cart clearCart(Long userId) throws Exception {
 
-        Cart cart = findCartById(userId);
+        Cart cart = findCartByUserId(userId);
+
         cart.getItem().clear();
         return cartRepo.save(cart);
     }

@@ -34,7 +34,7 @@ public class CategoryController {
 
 
     @GetMapping("/user/category")
-    public ResponseEntity<List<Category>> getRestaurantCategory( @RequestHeader("Authorization") String authHeader) throws Exception {
+    public ResponseEntity<List<Category>> getRestaurantCategoryByUserId( @RequestHeader("Authorization") String authHeader) throws Exception {
 
         Users user = userService.findUserByAuthorizationHeader(authHeader);
         List<Category> category  = categoryService.findCategoryByRestaurantIdFromUserId(user.getId());

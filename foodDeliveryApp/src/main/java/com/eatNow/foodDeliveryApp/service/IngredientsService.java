@@ -6,6 +6,7 @@ import com.eatNow.foodDeliveryApp.model.IngredientsItem;
 
 import java.util.List;
 
+
 public interface IngredientsService {
 
 

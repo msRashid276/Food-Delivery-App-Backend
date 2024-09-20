@@ -6,10 +6,12 @@ import com.eatNow.foodDeliveryApp.model.Restaurant;
 import com.eatNow.foodDeliveryApp.repository.IngredientsCategoryRepo;
 import com.eatNow.foodDeliveryApp.repository.IngredientsItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class IngredientsServiceImp implements IngredientsService{
 
     @Autowired

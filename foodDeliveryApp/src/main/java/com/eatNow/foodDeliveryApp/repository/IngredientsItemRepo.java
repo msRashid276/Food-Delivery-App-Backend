@@ -13,4 +13,5 @@ import java.util.List;
 public interface IngredientsItemRepo extends JpaRepository<IngredientsItem,Long> {
 
     List<IngredientsItem> findByRestaurantId(Long restaurantId);
+
 }
