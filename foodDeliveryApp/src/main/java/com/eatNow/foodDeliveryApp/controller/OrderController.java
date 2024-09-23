@@ -40,7 +40,7 @@ public class OrderController {
         Users user = userService.findUserByAuthorizationHeader(authHeader);
 
         List<Order> order = orderService.getUserOrders(user.getId());
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
 }

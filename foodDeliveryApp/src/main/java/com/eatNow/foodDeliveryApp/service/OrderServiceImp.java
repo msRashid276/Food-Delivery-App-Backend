@@ -99,18 +99,16 @@ public class OrderServiceImp implements OrderService{
             return orderRepo.save(order);
 
         }
-        return null;
+        throw new Exception("please select a valid order status");
     }
 
 
 
     @Override
-    public Order cancelOrder(Long orderId) throws Exception {
+    public void cancelOrder(Long orderId) throws Exception {
 
         Order order = findOrderById(orderId);
         orderRepo.deleteById(orderId);
-
-        return null;
     }
 
 

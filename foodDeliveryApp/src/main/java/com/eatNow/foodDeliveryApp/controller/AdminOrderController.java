@@ -37,8 +37,9 @@ public class AdminOrderController {
     public ResponseEntity<Order> updateOrderStatus(@PathVariable Long orderId,
                                                          @PathVariable String orderStatus,
                                                          @RequestHeader("Authorization") String authHeader) throws Exception {
-        Users user = userService.findUserByAuthorizationHeader(authHeader);
 
+        Users user = userService.findUserByAuthorizationHeader(authHeader);
+        System.out.println(user);
         Order order = orderService.updateOrder(orderId,orderStatus);
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
